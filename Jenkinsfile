@@ -18,8 +18,15 @@ pipeline {
 
     stage("Deploy") {
       steps {
-        sh 'echo 3'
+        sh 'docker-machine rm nginx-lua || true'
+        sh 'docker-machine create --driver amazonec2 --amazonec2-tags alexandr,kosenko --amazonec2-open-port 8080 --amazonec2-region eu-west-1 --amazonec2-userdata nginx-cloud-init nginx-lua'
       }
     }
-  }
+
+    stage("Test") {
+      steps {
+        sh 'sleep 60'
+        sh 'curl -v http://$(docker-machine url nginx-lua | egrep -o "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"):8080/lua_content'
+      }
+    }
 }

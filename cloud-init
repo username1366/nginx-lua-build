@@ -4,7 +4,17 @@ sudo su
 wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | apt-key add -
 sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 apt-get update
-apt-get install -y jenkins docker.io
+apt-get install -y jenkins
+apt-get remove -y docker docker-engine docker.io
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+apt-get update
+apt-get install -y docker-ce
 
 curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && \
 sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+sudo usermod -aG docker jenkins
+systemctl restart jenkins

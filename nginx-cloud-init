@@ -1,4 +1,24 @@
 #!/bin/bash
 
 sudo su
-docker run -d -p 8080:8080 username1366/nginx-lua:latest
+
+cat << EOF > /lib/systemd/system/nginx-lua.service
+[Unit]
+Description=Nginx Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=30s
+StandardInput=tty-force
+Restart=on-failure
+ExecStart=/usr/bin/docker run --name nginx-lua -it -p 8080:8080 username1366/nginx-lua:latest
+ExecStop=/usr/bin/docker rm -f nginx-lua
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl start nginx-lua
+systemctl enable nginx-lua

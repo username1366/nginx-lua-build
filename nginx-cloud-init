@@ -11,7 +11,7 @@ Requires=docker.service
 [Service]
 TimeoutStartSec=30s
 StandardInput=tty-force
-Restart=on-failure
+Restart=always
 ExecStart=/usr/bin/docker run --name nginx-lua -it -p 8080:8080 username1366/nginx-lua:latest
 ExecStop=/usr/bin/docker rm -f nginx-lua
 
@@ -22,3 +22,9 @@ EOF
 systemctl daemon-reload
 systemctl start nginx-lua
 systemctl enable nginx-lua
+
+
+until docker ps
+do
+  systemctl restart nginx-lua
+done

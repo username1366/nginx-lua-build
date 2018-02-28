@@ -4,13 +4,13 @@ pipeline {
   stages {
     stage("Build and Dockerize") {
       steps {
-        docker build -t username1366/nginx-lua:${BUILD_NUMBER} -t username1366/nginx-lua:latest  .
+        docker build -t username1366/nginx-lua:${env.BUILD_NUMBER} -t username1366/nginx-lua:latest  .
       }
     }
 
     stage("Push image") {
       steps {
-        docker push username1366/nginx-lua:${BUILD_NUMBER}
+        docker push username1366/nginx-lua:${env.BUILD_NUMBER}
       }
     }
 

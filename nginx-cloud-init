@@ -19,12 +19,13 @@ ExecStop=/usr/bin/docker rm -f nginx-lua
 WantedBy=multi-user.target
 EOF
 
-systemctl daemon-reload
-systemctl start nginx-lua
-systemctl enable nginx-lua
+#systemctl daemon-reload
+#systemctl start nginx-lua
+#systemctl enable nginx-lua
 
 
 until docker ps
 do
   systemctl restart nginx-lua
+  sleep 30
 done

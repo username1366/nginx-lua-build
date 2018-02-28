@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage("Build and Dockerize") {
       steps {
-        sh 'echo 1'
+        sh 'docker build -t username1366/nginx-lua:latest .'
       }
     }
 

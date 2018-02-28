@@ -21,8 +21,8 @@ pipeline {
         sh 'yes | docker-machine rm kosenko-nginx-lua || true'
         sh 'docker-machine create --driver amazonec2 --amazonec2-tags alexandr,kosenko --amazonec2-open-port 8080 --amazonec2-region eu-west-1 kosenko-nginx-lua'
         sh 'eval $(docker-machine env kosenko-nginx-lua)'
+        sh 'docker run --name nginx-lua -d -p 8080:8080 username1366/nginx-lua:latest'
         sh 'docker ps'
-        sh 'docker run --name nginx-lua -it -p 8080:8080 username1366/nginx-lua:latest'
       }
     }
   }

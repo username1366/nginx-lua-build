@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sudo su
+wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | apt-key add -
+sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+apt-get update
+apt-get install -y jenkins docker.io
+
+curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && \
+sudo install /tmp/docker-machine /usr/local/bin/docker-machine

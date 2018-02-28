@@ -23,10 +23,10 @@ pipeline {
       }
     }
 
-    stage("Test") {
-      steps {
-        sh 'sleep 60'
-        sh 'curl -v http://$(docker-machine url nginx-lua | egrep -o "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"):8080/lua_content'
-      }
-    }
+    #stage("Test") {
+    #  steps {
+    #    sh 'sleep 60'
+    #    sh 'curl -v http://$(docker-machine url nginx-lua | egrep -o "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"):8080/lua_content'
+    #  }
+    #}
 }
